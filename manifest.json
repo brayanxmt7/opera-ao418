@@ -1,0 +1,19 @@
+{
+  "name": "Operação 4:18",
+  "short_name": "Op 4:18",
+  "description": "App bíblico da Operação 4:18 — Mongaguá, SP",
+  "start_url": "/opera-ao418/",
+  "scope": "/opera-ao418/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#000000",
+  "theme_color": "#c8f000",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "id": "/opera-ao418/",
+  "categories": ["books", "education", "lifestyle", "social"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

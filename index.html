@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="manifest" href="/opera-ao418/manifest.json">
+<meta name="theme-color" content="#c8f000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Op 4:18">
+
 <title>Operação 4:18 — Mongaguá, SP</title>
 <style>
 /* ══════════════════════════════════════════
@@ -498,6 +504,7 @@ body { background: var(--bg); color: var(--text-primary); font-family: system-ui
 })();
 </script>
 </head>
+
 <body>
 
 <!-- ── TOGGLE TEMA ── -->
@@ -897,6 +904,10 @@ body { background: var(--bg); color: var(--text-primary); font-family: system-ui
 </div>
 
 <script>
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/opera-ao418/sw.js');
+  }
 /* ══════════════════════════════════════════
    THEME TOGGLE — escolha do usuário
    ══════════════════════════════════════════ */
