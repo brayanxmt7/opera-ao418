@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operação 4:18 — Mongaguá, SP</title>
+<style>
+/* ══════════════════════════════════════════
+   TOKENS — DARK (padrão)
+   ══════════════════════════════════════════ */
+:root,
+[data-theme="dark"] {
+  --accent:        #c8f000;
+  --accent-hi:     #d4ff00;
+  --accent-dim:    rgba(200,240,0,0.65);
+  --accent-ghost:  rgba(200,240,0,0.07);
+  --on-accent:     #000;
+  --bg:            #000;
+  --bg-card:       #111;
+  --bg-card2:      #0f0f0f;
+  --bg-input:      #161616;
+  --bg-subtle:     #0a0a0a;
+  --bg-verse:      #131800;
+  --bg-verse-hl:   #1e2900;
+  --bg-verse-sel:  #242c00;
+  --border:        #222;
+  --border-mid:    #2a2a2a;
+  --border-nav:    #333;
+  --text-primary:  #f0f0f0;
+  --text-secondary:#b0b0b0;
+  --text-muted:    #888;
+  --text-faint:    #555;
+  --shadow-accent: 0 4px 16px rgba(200,240,0,0.35);
+  --toggle-bg:     #1a1a1a;
+  --toggle-border: #333;
+  --select-arrow:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c8f000' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+}
+
+/* ══════════════════════════════════════════
+   TOKENS — LIGHT
+   ══════════════════════════════════════════ */
+[data-theme="light"] {
+  --accent:        #5a8200;
+  --accent-hi:     #4a6e00;
+  --accent-dim:    rgba(90,130,0,0.75);
+  --accent-ghost:  rgba(90,130,0,0.07);
+  --on-accent:     #fff;
+  --bg:            #f4f4f0;
+  --bg-card:       #ffffff;
+  --bg-card2:      #fafaf6;
+  --bg-input:      #f0f0ec;
+  --bg-subtle:     #e8e8e4;
+  --bg-verse:      #f5f9e8;
+  --bg-verse-hl:   #eaf2cc;
+  --bg-verse-sel:  #dceaa0;
+  --border:        #d4d4cc;
+  --border-mid:    #c8c8c0;
+  --border-nav:    #bebeb6;
+  --text-primary:  #1a1a1a;
+  --text-secondary:#3a3a3a;
+  --text-muted:    #5a5a52;
+  --text-faint:    #8a8a80;
+  --shadow-accent: 0 4px 16px rgba(90,130,0,0.25);
+  --toggle-bg:     #e8e8e4;
+  --toggle-border: #c0c0b8;
+  --select-arrow:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a8200' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+}
+
+/* ══════════════════════════════════════════
+   RESET & BASE
+   ══════════════════════════════════════════ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text-primary); font-family: system-ui, -apple-system, sans-serif; transition: background 0.3s, color 0.3s; }
+
+/* ══════════════════════════════════════════
+   THEME TOGGLE
+   ══════════════════════════════════════════ */
+#theme-toggle {
+  position: fixed; top: 14px; right: 14px; z-index: 900;
+  background: var(--toggle-bg); border: 1.5px solid var(--toggle-border);
+  border-radius: 20px; padding: 5px 12px 5px 8px;
+  display: flex; align-items: center; gap: 6px;
+  cursor: pointer; transition: border-color 0.2s, transform 0.15s;
+  user-select: none; box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
+#theme-toggle:hover { border-color: var(--accent); transform: scale(1.04); }
+#theme-toggle:active { transform: scale(0.97); }
+.toggle-track {
+  width: 32px; height: 18px; background: var(--border-mid);
+  border-radius: 9px; position: relative; transition: background 0.3s; flex-shrink: 0;
+}
+[data-theme="light"] .toggle-track { background: var(--accent); }
+.toggle-thumb {
+  width: 14px; height: 14px; background: #fff; border-radius: 50%;
+  position: absolute; top: 2px; left: 2px;
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+}
+[data-theme="light"] .toggle-thumb { transform: translateX(14px); }
+.toggle-icon { font-size: 14px; }
+.toggle-label { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; color: var(--text-muted); text-transform: uppercase; }
+
+/* ══════════════════════════════════════════
+   HERO
+   ══════════════════════════════════════════ */
+.hero { background: var(--bg); padding: 2rem 1.5rem 2.5rem; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ""; position: absolute; top:0;left:0;right:0;bottom:0; background: repeating-linear-gradient(-45deg,transparent,transparent 18px,var(--accent-ghost) 18px,var(--accent-ghost) 20px); }
+.logo-wrapper { display: inline-block; position: relative; margin-bottom: 1rem; }
+.logo-hash { font-size: 36px; font-weight: 900; color: var(--bg); font-style: italic; position: absolute; top: -10px; left: -28px; text-shadow: 2px 2px 0 var(--accent-hi), -1px -1px 0 var(--accent-hi); letter-spacing: -2px; }
+.logo-number { background: var(--accent); padding: 6px 18px; font-size: 42px; font-weight: 900; color: var(--on-accent); font-style: italic; display: inline-block; position: relative; z-index: 2; }
+.logo-globe { position: absolute; right: -22px; top: -8px; width: 36px; height: 36px; background: var(--border-mid); border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 20px; z-index: 3; }
+.logo-bar { background: var(--bg); border: 2px solid var(--accent); margin-top: -4px; padding: 8px 28px; position: relative; z-index: 1; }
+.logo-operacao { font-size: 34px; font-weight: 900; color: var(--accent); letter-spacing: 2px; font-style: italic; text-shadow: 2px 2px 0 var(--bg); display: block; }
+.logo-sub { font-size: 11px; letter-spacing: 4px; color: var(--accent); font-weight: 700; margin-top: 6px; opacity: 0.85; }
+.hero-tagline { font-size: 13px; color: var(--accent-dim); letter-spacing: 2px; margin-top: 1rem; text-transform: uppercase; }
+
+/* ══════════════════════════════════════════
+   TICKER
+   ══════════════════════════════════════════ */
+.ticker { background: var(--accent); color: var(--on-accent); font-size: 13px; font-weight: 700; padding: 6px 0; overflow: hidden; white-space: nowrap; }
+.ticker-inner { display: inline-block; animation: tickerMove 30s linear infinite; }
+@keyframes tickerMove { 0%{transform:translateX(100vw)} 100%{transform:translateX(-100%)} }
+
+/* ══════════════════════════════════════════
+   NAV
+   ══════════════════════════════════════════ */
+.nav { display: flex; justify-content: center; gap: 6px; padding: 0.75rem 1rem; background: var(--bg-card); flex-wrap: wrap; border-bottom: 2px solid var(--accent); }
+.nav-btn { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 6px 14px; border-radius: 2px; border: 1.5px solid var(--border-nav); background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+.nav-btn.active, .nav-btn:hover { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+
+/* ══════════════════════════════════════════
+   LAYOUT / PAGE TRANSITIONS
+   ══════════════════════════════════════════ */
+.main { padding: 1.25rem; max-width: 680px; margin: 0 auto; }
+.page { display: none; }
+.page.active { display: block; animation: pageFadeIn 0.28s ease forwards; }
+@keyframes pageFadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+/* ══════════════════════════════════════════
+   BACK TO TOP
+   ══════════════════════════════════════════ */
+#back-to-top {
+  position: fixed; bottom: 24px; right: 20px;
+  width: 42px; height: 42px; background: var(--accent); color: var(--on-accent);
+  border: none; border-radius: 50%; font-size: 18px; font-weight: 900; line-height: 1;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-accent); opacity: 0; pointer-events: none;
+  transform: translateY(12px) scale(0.85); transition: opacity 0.25s, transform 0.25s; z-index: 500;
+}
+#back-to-top.visible { opacity:1; pointer-events:auto; transform:translateY(0) scale(1); }
+#back-to-top:hover { background: var(--accent-hi); }
+#back-to-top:active { transform: scale(0.92); }
+
+/* ══════════════════════════════════════════
+   VERSE CARD
+   ══════════════════════════════════════════ */
+.verse-card { background: var(--bg-card); border: 1.5px solid var(--accent); border-radius: 4px; padding: 1.75rem; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
+.verse-card::before { content:"4:18"; position:absolute; right:12px; top:8px; font-size:64px; font-weight:900; color:var(--accent-ghost); font-style:italic; letter-spacing:-2px; }
+.verse-label { font-size:10px; letter-spacing:3px; color:var(--accent); text-transform:uppercase; margin-bottom:1rem; font-weight:700; }
+.verse-text { font-size:18px; font-weight:400; line-height:1.75; color:var(--text-primary); font-style:italic; margin-bottom:1rem; }
+.verse-ref { font-size:14px; color:var(--accent); font-weight:700; letter-spacing:1px; }
+.share-row { display:flex; gap:8px; margin-top:1.25rem; flex-wrap:wrap; }
+.share-btn { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:7px 14px; border-radius:2px; border:1.5px solid var(--border-nav); background:transparent; color:var(--text-muted); cursor:pointer; text-decoration:none; transition:all 0.15s; }
+.share-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+.section-title { font-size:13px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border); }
+
+/* ══════════════════════════════════════════
+   THEMES GRID
+   ══════════════════════════════════════════ */
+.themes-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; margin-bottom:1.5rem; }
+.theme-card { background:var(--bg-card); border:1.5px solid var(--border); border-radius:8px; padding:14px 10px; cursor:pointer; transition:all 0.15s; text-align:center; }
+.theme-card:hover { border-color:var(--accent); background:var(--bg-verse); }
+.theme-icon { font-size:20px; margin-bottom:5px; }
+.theme-name { font-size:12px; color:var(--text-secondary); font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+
+/* ══════════════════════════════════════════
+   WA BANNER
+   ══════════════════════════════════════════ */
+.wa-banner { background:var(--bg-subtle); border:2px solid #25D366; border-radius:4px; padding:1.25rem; margin-bottom:1.5rem; display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+.wa-icon { width:48px; height:48px; background:#25D366; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:24px; }
+.wa-text { flex:1; min-width:160px; }
+.wa-text h3 { font-size:15px; font-weight:700; color:var(--text-primary); margin-bottom:3px; letter-spacing:1px; }
+.wa-text p { font-size:12px; color:var(--text-muted); }
+.wa-btn { background:#25D366; color:#000; border:none; border-radius:2px; padding:10px 18px; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; cursor:pointer; white-space:nowrap; text-decoration:none; display:inline-block; transition:all 0.15s; }
+.wa-btn:hover { background:#1ebe5d; }
+.mission-bar { background:var(--accent); color:var(--on-accent); font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; text-align:center; padding:8px; }
+
+/* ══════════════════════════════════════════
+   DEVOTIONAL / PRAYER
+   ══════════════════════════════════════════ */
+.devotional-card { background:var(--bg-card); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:2px; padding:1.25rem; margin-bottom:0.75rem; transition:all 0.15s; }
+.devotional-card:hover { border-color:var(--accent); }
+.dev-date { font-size:10px; color:var(--accent); letter-spacing:2px; text-transform:uppercase; margin-bottom:0.4rem; font-weight:700; }
+.dev-title { font-size:16px; font-weight:700; color:var(--text-primary); margin-bottom:0.5rem; }
+.dev-preview { font-size:13px; color:var(--text-muted); line-height:1.6; }
+.read-more { font-size:12px; color:var(--accent); cursor:pointer; margin-top:0.5rem; display:inline-block; font-weight:700; letter-spacing:1px; }
+.prayer-box { background:var(--bg-card); border-left:3px solid var(--accent); border-radius:2px; padding:1.25rem; margin-bottom:0.75rem; }
+.prayer-box h3 { font-size:13px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:0.75rem; color:var(--accent); }
+.prayer-box p { font-size:14px; color:var(--text-secondary); line-height:1.7; font-style:italic; }
+
+/* ══════════════════════════════════════════
+   DEVOCIONAL — NOVO SISTEMA
+   ══════════════════════════════════════════ */
+.dev-header-row { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:1.25rem; }
+.dev-create-btn {
+  background:var(--accent); color:var(--on-accent); border:none; border-radius:2px;
+  padding:9px 18px; font-size:12px; font-weight:800; letter-spacing:1.5px;
+  text-transform:uppercase; cursor:pointer; transition:all 0.15s;
+  display:flex; align-items:center; gap:6px;
+}
+.dev-create-btn:hover { background:var(--accent-hi); transform:scale(1.03); }
+.dev-create-btn:active { transform:scale(0.97); }
+
+/* Card expandido */
+.dev-card-new {
+  background:var(--bg-card); border:1px solid var(--border);
+  border-left:3px solid var(--accent); border-radius:2px;
+  margin-bottom:0.75rem; overflow:hidden; transition:border-color 0.15s;
+}
+.dev-card-new:hover { border-color:var(--accent); }
+.dev-card-header {
+  padding:1.1rem 1.25rem 0.9rem;
+  cursor:pointer; display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+}
+.dev-card-header-left { flex:1; }
+.dev-card-chevron {
+  color:var(--accent); font-size:14px; font-weight:900; transition:transform 0.25s;
+  margin-top:2px; flex-shrink:0;
+}
+.dev-card-new.open .dev-card-chevron { transform:rotate(180deg); }
+.dev-card-body {
+  max-height:0; overflow:hidden; transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+  padding:0 1.25rem;
+}
+.dev-card-new.open .dev-card-body { max-height:800px; padding-bottom:1.25rem; }
+
+/* Blocos internos do devocional */
+.dev-block { margin-bottom:1rem; }
+.dev-block:last-child { margin-bottom:0; }
+.dev-block-label {
+  font-size:10px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
+  color:var(--accent); margin-bottom:0.4rem; display:flex; align-items:center; gap:6px;
+}
+.dev-verse-block {
+  background:var(--bg-verse); border-left:2px solid var(--accent-dim);
+  border-radius:2px; padding:0.85rem 1rem;
+}
+.dev-verse-quote { font-size:15px; color:var(--text-primary); font-style:italic; line-height:1.8; }
+.dev-verse-ref-line { font-size:12px; color:var(--accent); font-weight:700; margin-top:0.4rem; letter-spacing:1px; }
+.dev-reflection-block {
+  background:var(--bg-card2); border:1px solid var(--border-mid);
+  border-radius:2px; padding:0.85rem 1rem;
+}
+.dev-reflection-text { font-size:14px; color:var(--text-secondary); line-height:1.75; }
+.dev-learning-block {
+  background:var(--accent-ghost); border:1px solid var(--accent-dim);
+  border-radius:2px; padding:0.85rem 1rem;
+}
+.dev-learning-text { font-size:14px; color:var(--text-primary); line-height:1.75; font-weight:500; }
+
+/* Ações do card */
+.dev-card-actions {
+  display:flex; gap:8px; flex-wrap:wrap; padding-top:0.75rem;
+  border-top:1px solid var(--border); margin-top:0.85rem;
+}
+.dev-action-btn {
+  font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+  padding:7px 12px; border-radius:2px; border:1.5px solid var(--border-nav);
+  background:transparent; color:var(--text-muted); cursor:pointer; transition:all 0.15s;
+}
+.dev-action-btn:hover { border-color:var(--accent); color:var(--accent); }
+.dev-action-btn.has-note { border-color:var(--accent); color:var(--accent); }
+.dev-action-btn.wa { border-color:#25D366; color:#25D366; }
+.dev-action-btn.wa:hover { background:#25D366; color:#000; }
+.dev-user-badge {
+  font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+  color:var(--on-accent); background:var(--accent); padding:2px 8px; border-radius:2px;
+  margin-left:6px;
+}
+
+/* Modal criar devocional */
+.create-dev-modal-bg {
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9);
+  z-index:1000; overflow-y:auto; padding:20px 16px;
+}
+.create-dev-modal-bg.open { display:block; }
+.create-dev-modal {
+  background:var(--bg-card2); border:1.5px solid var(--accent);
+  border-radius:8px; max-width:600px; margin:0 auto; padding:24px;
+  animation:pageFadeIn 0.25s ease forwards;
+}
+.create-dev-modal-header {
+  display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;
+}
+.create-dev-modal-title {
+  font-size:14px; font-weight:800; color:var(--accent);
+  letter-spacing:3px; text-transform:uppercase;
+}
+.create-dev-close {
+  background:var(--bg-card); border:1px solid var(--border-nav); color:var(--text-muted);
+  width:34px; height:34px; border-radius:6px; cursor:pointer; font-size:18px;
+  display:flex; align-items:center; justify-content:center; transition:all 0.15s;
+}
+.create-dev-close:hover { border-color:var(--accent); color:var(--accent); }
+.create-dev-field { margin-bottom:1rem; }
+.create-dev-label {
+  font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  color:var(--accent); display:block; margin-bottom:0.4rem;
+}
+.create-dev-input, .create-dev-textarea {
+  width:100%; background:var(--bg-input); border:1.5px solid var(--border-mid);
+  color:var(--text-primary); padding:11px 14px; border-radius:6px;
+  font-size:14px; transition:border-color 0.2s; font-family:inherit;
+}
+.create-dev-input:focus, .create-dev-textarea:focus {
+  outline:none; border-color:var(--accent);
+}
+.create-dev-textarea { resize:vertical; min-height:80px; line-height:1.6; }
+.create-dev-actions {
+  display:flex; gap:10px; justify-content:flex-end; margin-top:1.25rem; flex-wrap:wrap;
+}
+.create-dev-cancel {
+  background:transparent; border:1.5px solid var(--border-nav); color:var(--text-muted);
+  padding:10px 20px; border-radius:6px; font-size:13px; font-weight:700;
+  cursor:pointer; transition:all 0.15s;
+}
+.create-dev-cancel:hover { border-color:var(--accent); color:var(--accent); }
+.create-dev-save {
+  background:var(--accent); color:var(--on-accent); border:none;
+  padding:10px 24px; border-radius:6px; font-size:13px; font-weight:800;
+  letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:all 0.15s;
+}
+.create-dev-save:hover { background:var(--accent-hi); }
+.create-dev-save:active { transform:scale(0.97); }
+
+/* ══════════════════════════════════════════
+   BÍBLIA
+   ══════════════════════════════════════════ */
+.bible-layout { display:flex; flex-direction:column; gap:14px; }
+.bible-selectors { display:flex; gap:10px; flex-wrap:wrap; }
+.bible-select {
+  flex:1; min-width:120px; background:var(--bg-input); border:1.5px solid var(--accent);
+  color:var(--accent); padding:11px 36px 11px 14px; border-radius:8px;
+  font-size:14px; font-weight:600; cursor:pointer; appearance:none;
+  background-image:var(--select-arrow); background-repeat:no-repeat;
+  background-position:right 12px center; background-color:var(--bg-input); transition:border-color 0.15s;
+}
+.bible-select:focus { outline:none; border-color:var(--accent-hi); }
+.bible-select option { background:var(--bg-input); color:var(--text-primary); }
+.bible-load-btn { background:var(--accent); color:var(--on-accent); border:none; border-radius:8px; padding:11px 22px; font-size:14px; font-weight:800; letter-spacing:1px; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition:opacity 0.15s; }
+.bible-load-btn:hover { opacity:0.85; }
+.chap-grid-label { font-size:10px; color:var(--text-faint); letter-spacing:3px; text-transform:uppercase; margin-bottom:8px; font-weight:700; }
+.chapter-grid { display:flex; flex-wrap:wrap; gap:6px; }
+.chap-num { width:40px; height:40px; background:var(--bg-input); border:1px solid var(--border-mid); color:var(--text-muted); border-radius:8px; font-size:13px; font-weight:700; cursor:pointer; text-align:center; display:flex; align-items:center; justify-content:center; transition:all 0.12s; }
+.chap-num:hover { border-color:var(--accent); color:var(--accent); background:var(--bg-verse); }
+.chap-num.active { background:var(--accent); color:var(--on-accent); border-color:var(--accent); }
+.chapter-nav { display:flex; align-items:center; gap:10px; background:var(--bg-input); border:1px solid var(--border-mid); border-radius:10px; padding:10px 14px; }
+.chap-nav-btn { background:var(--bg-card); border:1px solid var(--border-nav); color:var(--text-muted); padding:7px 16px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer; letter-spacing:0.5px; transition:all 0.15s; white-space:nowrap; }
+.chap-nav-btn:hover { border-color:var(--accent); color:var(--accent); }
+.chap-nav-btn:disabled { opacity:0.3; cursor:default; pointer-events:none; }
+.chap-info { flex:1; font-size:13px; font-weight:700; color:var(--accent); letter-spacing:2px; text-transform:uppercase; text-align:center; }
+
+.verses-area { margin-top:4px; }
+.verse-row { display:flex; gap:14px; padding:14px 14px 14px 16px; cursor:pointer; border-radius:8px; transition:background 0.15s; background:var(--bg-verse); border-left:3px solid var(--accent); margin-bottom:6px; position:relative; }
+.verse-row:hover { background:var(--bg-verse-hl); }
+.verse-row.bookmarked { border-left:3px solid #f0c040; }
+.verse-row.bookmarked .verse-num { color:#f0c040; }
+.bookmark-star { position:absolute; top:10px; right:10px; font-size:14px; opacity:0; transition:opacity 0.15s; pointer-events:none; }
+.verse-row:hover .bookmark-star { opacity:0.4; }
+.verse-row.bookmarked .bookmark-star { opacity:1; }
+@keyframes verseHighlightPop { 0%{filter:brightness(1.5)} 100%{filter:brightness(1)} }
+.verse-row.verse-highlight { background:var(--bg-verse-sel); border-left:4px solid var(--accent-hi); animation:verseHighlightPop 0.4s ease forwards; }
+.verse-num { color:var(--accent); font-size:13px; font-weight:800; min-width:22px; padding-top:3px; flex-shrink:0; text-align:right; }
+.verse-body { font-size:15px; color:var(--text-primary); font-weight:500; flex:1; line-height:1.85; letter-spacing:0.01em; }
+.verse-row.verse-highlight .verse-body { font-weight:600; }
+.bible-placeholder { color:var(--text-faint); font-size:14px; text-align:center; padding:3rem 1rem; letter-spacing:2px; border:1px dashed var(--border-mid); border-radius:10px; line-height:2; }
+.bible-loading { color:var(--accent); font-size:13px; text-align:center; padding:2.5rem; letter-spacing:2px; animation:pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.bible-error { color:var(--text-muted); font-size:13px; text-align:center; padding:2rem; border:1px solid var(--border-mid); border-radius:10px; line-height:1.8; }
+
+/* ══════════════════════════════════════════
+   BOOKMARKS PANEL
+   ══════════════════════════════════════════ */
+.bookmarks-bar { display:flex; align-items:center; justify-content:space-between; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:10px 14px; margin-bottom:10px; cursor:pointer; user-select:none; transition:border-color 0.15s; }
+.bookmarks-bar:hover { border-color:var(--accent); }
+.bookmarks-bar-label { font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); display:flex; align-items:center; gap:8px; }
+.bookmarks-count { background:#f0c040; color:#000; font-size:10px; font-weight:800; padding:2px 7px; border-radius:20px; }
+.bookmarks-chevron { color:var(--text-faint); font-size:12px; transition:transform 0.2s; }
+.bookmarks-bar.open .bookmarks-chevron { transform:rotate(180deg); }
+.bookmarks-panel { display:none; background:var(--bg-card2); border:1px solid var(--border); border-top:none; border-radius:0 0 8px 8px; padding:12px; margin-top:-10px; margin-bottom:10px; }
+.bookmarks-panel.open { display:block; animation:pageFadeIn 0.2s ease forwards; }
+.bookmark-item { display:flex; align-items:flex-start; gap:10px; padding:10px 12px; border-radius:6px; border-left:3px solid #f0c040; background:var(--bg-verse); margin-bottom:6px; font-size:13px; color:var(--text-secondary); line-height:1.6; }
+.bookmark-item-ref { font-size:11px; color:#f0c040; font-weight:700; letter-spacing:1px; display:block; margin-top:4px; }
+.bookmark-remove { margin-left:auto; flex-shrink:0; background:none; border:none; color:var(--text-faint); cursor:pointer; font-size:16px; padding:0 4px; transition:color 0.15s; }
+.bookmark-remove:hover { color:#ff6060; }
+.bookmarks-empty { text-align:center; color:var(--text-faint); font-size:13px; padding:1rem; letter-spacing:1px; }
+.bookmarks-clear { background:none; border:1px solid var(--border-nav); color:var(--text-faint); font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:6px 12px; border-radius:4px; cursor:pointer; display:block; margin:8px auto 0; transition:all 0.15s; }
+.bookmarks-clear:hover { border-color:#ff6060; color:#ff6060; }
+
+/* ══════════════════════════════════════════
+   REFLETIR
+   ══════════════════════════════════════════ */
+.verse-row { position:relative; }
+.btn-reflect {
+  display:inline-flex; align-items:center; gap:4px;
+  background:none; border:1px solid var(--border-mid);
+  color:var(--text-faint); font-size:10px; font-weight:700;
+  letter-spacing:1px; text-transform:uppercase;
+  padding:3px 8px; border-radius:4px; cursor:pointer;
+  margin-top:6px; transition:all 0.15s; flex-shrink:0;
+  opacity:0; pointer-events:none;
+}
+.verse-row:hover .btn-reflect { opacity:1; pointer-events:auto; }
+.btn-reflect:hover { border-color:var(--accent); color:var(--accent); }
+.btn-reflect.has-note { opacity:1 !important; pointer-events:auto !important; border-color:var(--accent-dim); color:var(--accent); }
+.verse-body-wrap { display:flex; flex-direction:column; flex:1; }
+
+/* Modal de reflexão */
+.reflect-modal-bg {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,0.82); z-index:1100;
+  padding:20px 16px; align-items:flex-end; justify-content:center;
+  visibility:hidden; pointer-events:none;
+}
+.reflect-modal-bg.open { display:flex; visibility:visible; pointer-events:auto; }
+.reflect-modal {
+  background:var(--bg-card2); border:1.5px solid var(--accent);
+  border-radius:12px; max-width:600px; width:100%;
+  padding:20px; max-height:90vh; overflow-y:auto;
+}
+.reflect-modal-bg.open .reflect-modal { animation:slideUp 0.28s cubic-bezier(.4,0,.2,1) forwards; }
+@keyframes slideUp { from{transform:translateY(40px);opacity:0} to{transform:translateY(0);opacity:1} }
+.reflect-modal-label { font-size:10px; color:var(--accent); letter-spacing:3px; text-transform:uppercase; font-weight:700; margin-bottom:8px; }
+.reflect-modal-verse { font-size:14px; color:var(--text-secondary); font-style:italic; line-height:1.7; margin-bottom:4px; padding:10px 14px; background:var(--bg-verse); border-left:3px solid var(--accent); border-radius:4px; }
+.reflect-modal-verse:empty { display:none; }
+.reflect-modal-ref { font-size:12px; color:var(--accent); font-weight:700; letter-spacing:1px; margin-bottom:14px; text-align:right; }
+.reflect-modal-prompt { font-size:12px; color:var(--text-muted); margin-bottom:8px; letter-spacing:0.5px; }
+.reflect-textarea {
+  width:100%; background:var(--bg-input); border:1.5px solid var(--border-mid);
+  border-radius:8px; color:var(--text-primary); font-size:14px; line-height:1.7;
+  padding:12px 14px; resize:vertical; min-height:120px; font-family:inherit;
+  transition:border-color 0.15s; outline:none;
+}
+.reflect-textarea:focus { border-color:var(--accent); }
+.reflect-textarea::placeholder { color:var(--text-faint); }
+.reflect-modal-actions { display:flex; gap:8px; margin-top:12px; justify-content:flex-end; flex-wrap:wrap; }
+.reflect-btn-save {
+  background:var(--accent); color:var(--on-accent); border:none;
+  padding:9px 20px; border-radius:6px; font-size:12px; font-weight:800;
+  letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:opacity 0.15s;
+}
+.reflect-btn-save:hover { opacity:0.85; }
+.reflect-btn-cancel {
+  background:none; border:1px solid var(--border-nav); color:var(--text-muted);
+  padding:9px 16px; border-radius:6px; font-size:12px; font-weight:700;
+  letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:all 0.15s;
+}
+.reflect-btn-cancel:hover { border-color:var(--text-muted); color:var(--text-primary); }
+.reflect-btn-delete {
+  background:none; border:1px solid #ff6060; color:#ff6060;
+  padding:9px 14px; border-radius:6px; font-size:12px; font-weight:700;
+  letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:all 0.15s;
+  margin-right:auto;
+}
+.reflect-btn-delete:hover { background:#ff606022; }
+.reflect-saved-badge {
+  font-size:10px; color:var(--accent); font-weight:700; letter-spacing:1px;
+  margin-top:4px; display:none;
+}
+.reflect-saved-badge.show { display:block; animation:pageFadeIn 0.3s ease forwards; }
+
+/* ══════════════════════════════════════════
+   FOOTER / MISC
+   ══════════════════════════════════════════ */
+.footer { text-align:center; padding:2rem 1.5rem; background:var(--bg); border-top:2px solid var(--accent); color:var(--text-faint); font-size:12px; letter-spacing:1px; }
+.footer-logo { font-size:22px; font-weight:900; color:var(--accent); font-style:italic; margin-bottom:0.4rem; letter-spacing:2px; }
+@keyframes bpulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+.live-dot { display:inline-block; width:8px; height:8px; background:var(--accent); border-radius:50%; margin-right:6px; animation:bpulse 1.5s infinite; }
+.theme-modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:999; overflow-y:auto; padding:20px 16px; }
+.theme-modal-bg.open { display:block; }
+.theme-modal { background:var(--bg-card2); border:1.5px solid var(--accent); border-radius:12px; max-width:600px; margin:0 auto; padding:24px; }
+.theme-modal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+.theme-modal-title { font-size:16px; font-weight:800; color:var(--accent); letter-spacing:3px; text-transform:uppercase; }
+.theme-modal-close { background:var(--bg-card); border:1px solid var(--border-nav); color:var(--text-muted); width:34px; height:34px; border-radius:6px; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:all 0.15s; }
+.theme-modal-close:hover { border-color:var(--accent); color:var(--accent); }
+.theme-verse-item { background:var(--bg-verse); border-left:3px solid var(--accent); border-radius:8px; padding:16px; margin-bottom:10px; }
+.theme-verse-text { font-size:15px; color:var(--text-primary); font-weight:500; line-height:1.8; margin-bottom:8px; font-style:italic; }
+.theme-verse-ref { font-size:12px; color:var(--accent); font-weight:700; letter-spacing:1px; }
+</style>
+
+<!-- Aplica tema antes de renderizar para evitar flash -->
+<script>
+(function(){
+  const saved = localStorage.getItem('op418_theme');
+  const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  document.documentElement.setAttribute('data-theme', saved || (sysDark ? 'dark' : 'light'));
+})();
+</script>
+</head>
+<body>
+
+<!-- ── TOGGLE TEMA ── -->
+<button id="theme-toggle" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema claro/escuro">
+  <div class="toggle-track"><div class="toggle-thumb"></div></div>
+  <span class="toggle-icon" id="toggle-icon">☀️</span>
+  <span class="toggle-label" id="toggle-label">Claro</span>
+</button>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="logo-wrapper">
+    <span class="logo-hash">#</span>
+    <div class="logo-number">4:18<span class="logo-globe">🌎</span></div>
+    <div class="logo-bar"><span class="logo-operacao">OPERAÇÃO</span></div>
+  </div>
+  <div class="logo-sub">LUCAS 4:18 • ENVIADOS PARA LIBERTAR</div>
+  <div class="hero-tagline">✦ Mongaguá, SP ✦</div>
+</div>
+
+<div class="ticker">
+  <span class="ticker-inner">✦ "O Espírito do Senhor está sobre mim, porque me ungiu para anunciar boas novas aos pobres." — Lucas 4:18 &nbsp;&nbsp;&nbsp; ✦ Bíblia completa disponível &nbsp;&nbsp;&nbsp; ✦ WhatsApp: (13) 99671-8228 &nbsp;&nbsp;&nbsp; ✦ ENVIADOS PARA LIBERTAR &nbsp;&nbsp;&nbsp;</span>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="showPage('inicio',this)">Início</button>
+  <button class="nav-btn" onclick="showPage('biblia',this)">📖 Bíblia</button>
+  <button class="nav-btn" onclick="showPage('devocional',this)">Devocional</button>
+  <button class="nav-btn" onclick="showPage('oracao',this)">Oração</button>
+  <button class="nav-btn" onclick="showPage('contato',this)">Contato</button>
+</div>
+
+<div class="main">
+
+  <!-- INÍCIO -->
+  <div id="inicio" class="page active">
+    <div class="verse-card">
+      <div class="verse-label"><span class="live-dot"></span>Versículo do Dia — <span id="today-date"></span></div>
+      <div class="verse-text" id="verse-text"></div>
+      <div class="verse-ref" id="verse-ref"></div>
+      <div class="share-row">
+        <button class="share-btn" onclick="newVerse()">↻ Próximo</button>
+        <a class="share-btn" href="#" onclick="shareWA();return false;">Compartilhar WhatsApp</a>
+        <button class="share-btn" onclick="copyVerse()">Copiar ✦</button>
+        <button class="share-btn" onclick="reflectDailyVerse()">✍ Refletir</button>
+      </div>
+    </div>
+    <p class="section-title">▸ Explore por tema</p>
+    <div class="themes-grid">
+      <div class="theme-card" onclick="goTheme('fé')"><div class="theme-icon">🙏</div><div class="theme-name">Fé</div></div>
+      <div class="theme-card" onclick="goTheme('amor')"><div class="theme-icon">❤️</div><div class="theme-name">Amor</div></div>
+      <div class="theme-card" onclick="goTheme('esperança')"><div class="theme-icon">🌅</div><div class="theme-name">Esperança</div></div>
+      <div class="theme-card" onclick="goTheme('paz')"><div class="theme-icon">🕊️</div><div class="theme-name">Paz</div></div>
+      <div class="theme-card" onclick="goTheme('força')"><div class="theme-icon">💪</div><div class="theme-name">Força</div></div>
+      <div class="theme-card" onclick="goTheme('sabedoria')"><div class="theme-icon">📖</div><div class="theme-name">Sabedoria</div></div>
+      <div class="theme-card" onclick="goTheme('cura')"><div class="theme-icon">✨</div><div class="theme-name">Cura</div></div>
+      <div class="theme-card" onclick="goTheme('missão')"><div class="theme-icon">🌎</div><div class="theme-name">Missão</div></div>
+    </div>
+    <div class="wa-banner">
+      <div class="wa-icon">💬</div>
+      <div class="wa-text"><h3>Fale com a Operação 4:18</h3><p>Envie sua oração, dúvida ou testemunho.</p></div>
+      <a class="wa-btn" href="https://wa.me/5513996718228?text=Ol%C3%A1%2C%20vim%20pelo%20site%20Opera%C3%A7%C3%A3o%204%3A18%20e%20gostaria%20de%20conversar%20%F0%9F%99%8F" target="_blank">Abrir WhatsApp</a>
+    </div>
+    <div class="mission-bar">✦ Enviados para libertar — Lucas 4:18 ✦</div>
+  </div>
+
+  <!-- BÍBLIA -->
+  <div id="biblia" class="page">
+    <div class="bible-layout">
+      <p class="section-title">▸ Bíblia Sagrada — Almeida</p>
+      <div class="bookmarks-bar" onclick="toggleBookmarksPanel()" id="bookmarks-bar">
+        <span class="bookmarks-bar-label">⭐ Versículos Salvos <span class="bookmarks-count" id="bookmarks-count">0</span></span>
+        <span class="bookmarks-chevron">▼</span>
+      </div>
+      <div class="bookmarks-panel" id="bookmarks-panel">
+        <div id="bookmarks-list"><p class="bookmarks-empty">Nenhum versículo salvo ainda.<br>Segure 1s (mobile) ou clique duas vezes (desktop) para salvar ⭐</p></div>
+        <button class="bookmarks-clear" onclick="clearAllBookmarks()">Limpar todos</button>
+      </div>
+      <div class="bible-selectors">
+        <select class="bible-select" id="book-select" onchange="onBookChange()" style="flex:2;min-width:160px;"></select>
+        <select class="bible-select" id="chap-select"></select>
+        <button class="bible-load-btn" onclick="loadChapter()">LER ▶</button>
+      </div>
+      <div id="chap-grid-wrap" style="display:none;">
+        <p class="chap-grid-label">Capítulos</p>
+        <div class="chapter-grid" id="chap-grid"></div>
+      </div>
+      <div class="chapter-nav" id="chap-nav" style="display:none;">
+        <button class="chap-nav-btn" id="btn-prev-chap" onclick="prevChap()">◀ Anterior</button>
+        <div class="chap-info" id="chap-info"></div>
+        <button class="chap-nav-btn" id="btn-next-chap" onclick="nextChap()">Próximo ▶</button>
+      </div>
+      <div id="bible-content">
+        <div class="bible-placeholder">📖<br><br>Selecione um livro e capítulo<br>para começar a ler.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEVOCIONAL -->
+  <div id="devocional" class="page">
+    <div class="dev-header-row">
+      <p class="section-title" style="margin-bottom:0;border:none;">▸ Devocionais da semana</p>
+      <button class="dev-create-btn" onclick="openCreateDev()">✦ Criar devocional</button>
+    </div>
+
+    <!-- Lista de devocionais -->
+    <div id="dev-list">
+
+      <!-- Devocional 1 -->
+      <div class="dev-card-new" id="dcard-0">
+        <div class="dev-card-header" onclick="toggleDevCard('dcard-0')">
+          <div class="dev-card-header-left">
+            <div class="dev-date">Segunda-feira</div>
+            <div class="dev-title">Confie no Senhor de todo o seu coração</div>
+            <div class="dev-preview">Quando a vida nos apresenta desafios maiores que nossas forças, Deus nos convida a descansar Nele...</div>
+          </div>
+          <div class="dev-card-chevron">▼</div>
+        </div>
+        <div class="dev-card-body">
+          <div class="dev-block">
+            <div class="dev-block-label">📖 Versículo base</div>
+            <div class="dev-verse-block">
+              <div class="dev-verse-quote">"Confie no Senhor de todo o seu coração e não se apoie no seu próprio entendimento; reconheça-o em todos os seus caminhos, e ele endireitará as suas veredas."</div>
+              <div class="dev-verse-ref-line">— Provérbios 3:5-6</div>
+            </div>
+          </div>
+          <div class="dev-block">
+            <div class="dev-block-label">💭 Reflexão</div>
+            <div class="dev-reflection-block">
+              <div class="dev-reflection-text">Vivemos numa cultura que exalta a autossuficiência. Somos ensinados a confiar em nós mesmos, em nossos planos, em nossa inteligência. Mas Deus nos chama a um caminho diferente — o caminho da dependência. Confiar "de todo o coração" significa não reservar um canto secreto onde nós mesmos tomamos as rédeas. É uma entrega total, uma rendição consciente e diária ao Senhor que conhece cada detalhe de nossa vida.</div>
+            </div>
+          </div>
+          <div class="dev-block">
+            <div class="dev-block-label">✦ Aprendizado</div>
+            <div class="dev-learning-block">
+              <div class="dev-learning-text">Hoje, antes de qualquer decisão, pergunte: "Senhor, o que Tu queres aqui?" Entregue a situação que mais te angustia e observe como os Seus caminhos são infinitamente melhores que os nossos planos.</div>
+            </div>
+          </div>
+          <div class="dev-card-actions">
+            <button class="dev-action-btn" id="devref-btn-0" onclick="openDevReflect('dcard-0','Confie no Senhor de todo o seu coração','Provérbios 3:5-6',event)">✍ Refletir</button>
+            <button class="dev-action-btn wa" onclick="shareDevWA('Confie no Senhor de todo o seu coração','Provérbios 3:5-6','&quot;Confie no Senhor de todo o seu coração e não se apoie no seu próprio entendimento&quot;','Vivemos numa cultura que exalta a autossuficiência. Deus nos chama ao caminho da dependência total — uma entrega consciente e diária.','Hoje, antes de qualquer decisão, pergunte: Senhor, o que Tu queres aqui?')">📲 WhatsApp</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Devocional 2 -->
+      <div class="dev-card-new" id="dcard-1">
+        <div class="dev-card-header" onclick="toggleDevCard('dcard-1')">
+          <div class="dev-card-header-left">
+            <div class="dev-date">Terça-feira</div>
+            <div class="dev-title">A paz que excede todo entendimento</div>
+            <div class="dev-preview">Em meio ao turbilhão do cotidiano, a paz de Deus é como uma âncora para a nossa alma...</div>
+          </div>
+          <div class="dev-card-chevron">▼</div>
+        </div>
+        <div class="dev-card-body">
+          <div class="dev-block">
+            <div class="dev-block-label">📖 Versículo base</div>
+            <div class="dev-verse-block">
+              <div class="dev-verse-quote">"E a paz de Deus, que excede todo o entendimento, guardará os vossos corações e os vossos pensamentos em Cristo Jesus."</div>
+              <div class="dev-verse-ref-line">— Filipenses 4:7</div>
+            </div>
+          </div>
+          <div class="dev-block">
+            <div class="dev-block-label">💭 Reflexão</div>
+            <div class="dev-reflection-block">
+              <div class="dev-reflection-text">Paulo escreveu Filipenses de dentro de uma prisão. Mesmo assim, a palavra "alegria" aparece mais de 15 vezes na carta. A paz que ele descreve não é ausência de problema — é uma presença sobrenatural de Deus no meio do problema. Essa paz não faz sentido racional, não cabe em planilha nenhuma. Ela "excede o entendimento" porque vem de uma fonte além da nossa compreensão.</div>
+            </div>
+          </div>
+          <div class="dev-block">
+            <div class="dev-block-label">✦ Aprendizado</div>
+            <div class="dev-learning-block">
+              <div class="dev-learning-text">Quando a ansiedade bater, lembre: a paz de Deus não é conquistada — é recebida. Ore especificamente sobre o que te preocupa, com ação de graças, e abra espaço para essa paz sobrenatural guardar sua mente.</div>
+            </div>
+          </div>
+          <div class="dev-card-actions">
+            <button class="dev-action-btn" id="devref-btn-1" onclick="openDevReflect('dcard-1','A paz que excede todo entendimento','Filipenses 4:7',event)">✍ Refletir</button>
+            <button class="dev-action-btn wa" onclick="shareDevWA('A paz que excede todo entendimento','Filipenses 4:7','&quot;A paz de Deus, que excede todo o entendimento, guardará os vossos corações&quot;','Paulo escreveu de dentro de uma prisão — e ainda assim descreveu uma paz sobrenatural que não faz sentido racional.','A paz de Deus não é conquistada, é recebida. Ore com ação de graças e abra espaço para ela guardar sua mente.')">📲 WhatsApp</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Devocional 3 -->
+      <div class="dev-card-new" id="dcard-2">
+        <div class="dev-card-header" onclick="toggleDevCard('dcard-2')">
+          <div class="dev-card-header-left">
+            <div class="dev-date">Quarta-feira</div>
+            <div class="dev-title">Enviados para libertar</div>
+            <div class="dev-preview">Lucas 4:18 é o coração da nossa missão. Jesus foi ungido para libertar — e nós também fomos...</div>
+          </div>
+          <div class="dev-card-chevron">▼</div>
+        </div>
+        <div class="dev-card-body">
+          <div class="dev-block">
+            <div class="dev-block-label">📖 Versículo base</div>
+            <div class="dev-verse-block">
+              <div class="dev-verse-quote">"O Espírito do Senhor está sobre mim, porque me ungiu para anunciar boas novas aos pobres; enviou-me para proclamar libertação aos cativos e recuperação da vista aos cegos, para colocar em liberdade os oprimidos."</div>
+              <div class="dev-verse-ref-line">— Lucas 4:18</div>
+            </div>
+          </div>
+          <div class="dev-block">
+            <div class="dev-block-label">💭 Reflexão</div>
+            <div class="dev-reflection-block">
+              <div class="dev-reflection-text">Esse foi o primeiro sermão público de Jesus. Ele abriu o livro, leu Isaías, fechou e disse: "Hoje se cumpriu esta Escritura." Era Sua declaração de missão. E essa missão não terminou na cruz — ela continua em nós. Toda vez que anunciamos boas novas, toda vez que acompanhamos alguém em sua dor, toda vez que oramos por libertação, somos extensão dessa missão que tem 2.000 anos.</div>
+            </div>
+          </div>
+          <div class="dev-block">
+            <div class="dev-block-label">✦ Aprendizado</div>
+            <div class="dev-learning-block">
+              <div class="dev-learning-text">Você está em alguma missão hoje — no trabalho, em casa, na rua. Pergunte: quem ao meu redor precisa ouvir uma boa notícia, ser libertado de alguma corrente, receber encorajamento? Você é enviado para libertar.</div>
+            </div>
+          </div>
+          <div class="dev-card-actions">
+            <button class="dev-action-btn" id="devref-btn-2" onclick="openDevReflect('dcard-2','Enviados para libertar','Lucas 4:18',event)">✍ Refletir</button>
+            <button class="dev-action-btn wa" onclick="shareDevWA('Enviados para libertar','Lucas 4:18','&quot;O Espírito do Senhor está sobre mim, porque me ungiu para anunciar boas novas&quot;','Esse foi o primeiro sermão público de Jesus — Sua declaração de missão que continua viva em nós.','Pergunte: quem ao meu redor precisa ouvir uma boa notícia hoje? Você é enviado para libertar.')">📲 WhatsApp</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Devocional 4 -->
+      <div class="dev-card-new" id="dcard-3">
+        <div class="dev-card-header" onclick="toggleDevCard('dcard-3')">
+          <div class="dev-card-header-left">
+            <div class="dev-date">Quinta-feira</div>
+            <div class="dev-title">Renovando forças como as águias</div>
+            <div class="dev-preview">Quantas vezes nos sentimos esgotados? Isaías 40:31 promete algo sobrenatural para quem espera...</div>
+          </div>
+          <div class="dev-card-chevron">▼</div>
+        </div>
+        <div class="dev-card-body">
+          <div class="dev-block">
+            <div class="dev-block-label">📖 Versículo base</div>
+            <div class="dev-verse-block">
+              <div class="dev-verse-quote">"Mas os que esperam no Senhor renovarão as suas forças. Voarão alto como águias; correrão e não se cansarão; caminharão e não se fatigarão."</div>
+              <div class="dev-verse-ref-line">— Isaías 40:31</div>
+            </div>
+          </div>
+          <div class="dev-block">
+            <div class="dev-block-label">💭 Reflexão</div>
+            <div class="dev-reflection-block">
+              <div class="dev-reflection-text">A águia não bate as asas o tempo todo — ela usa as correntes de ar quente para planar. Ela descansa em movimento. Isso é uma imagem poderosa da vida no Espírito: não é que não há esforço, é que o esforço vem de uma fonte que não se esgota. "Esperar no Senhor" em hebraico (qavah) significa torcer, entrançar — como uma corda que ganha força quando vários fios se unem. Quando nos unimos a Deus na espera, saímos mais fortes.</div>
+            </div>
+          </div>
+          <div class="dev-block">
+            <div class="dev-block-label">✦ Aprendizado</div>
+            <div class="dev-learning-block">
+              <div class="dev-learning-text">Reserve 5 minutos hoje só para "esperar" — sem pedir, sem resolver. Apenas confiar. É nesses momentos de quietude que as forças são renovadas para os voos que virão.</div>
+            </div>
+          </div>
+          <div class="dev-card-actions">
+            <button class="dev-action-btn" id="devref-btn-3" onclick="openDevReflect('dcard-3','Renovando forças como as águias','Isaías 40:31',event)">✍ Refletir</button>
+            <button class="dev-action-btn wa" onclick="shareDevWA('Renovando forças como as águias','Isaías 40:31','&quot;Os que esperam no Senhor renovarão as suas forças. Voarão alto como águias&quot;','A águia não bate as asas o tempo todo — ela usa as correntes de ar para planar. Assim é a vida no Espírito.','Reserve 5 minutos hoje só para esperar — sem pedir, sem resolver. Apenas confiar.')">📲 WhatsApp</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Devocional 5 -->
+      <div class="dev-card-new" id="dcard-4">
+        <div class="dev-card-header" onclick="toggleDevCard('dcard-4')">
+          <div class="dev-card-header-left">
+            <div class="dev-date">Sexta-feira</div>
+            <div class="dev-title">O amor que nunca falha</div>
+            <div class="dev-preview">1 Coríntios 13 nos apresenta a definição mais bela de amor — paciente, bondoso, que nunca perece...</div>
+          </div>
+          <div class="dev-card-chevron">▼</div>
+        </div>
+        <div class="dev-card-body">
+          <div class="dev-block">
+            <div class="dev-block-label">📖 Versículo base</div>
+            <div class="dev-verse-block">
+              <div class="dev-verse-quote">"O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha. Não se comporta com indecência, não procura o que é seu, não se irrita, não suspeita do mal. Não se alegra com a injustiça, mas se alegra com a verdade."</div>
+              <div class="dev-verse-ref-line">— 1 Coríntios 13:4-6</div>
+            </div>
+          </div>
+          <div class="dev-block">
+            <div class="dev-block-label">💭 Reflexão</div>
+            <div class="dev-reflection-block">
+              <div class="dev-reflection-text">Paulo escreveu isso para uma igreja cheia de conflitos, ciúmes e divisões. Esse hino ao amor não é uma descrição poética de como nós já somos — é um retrato de como Deus nos chama a ser. Cada característica é uma batalha. A paciência se prova no ônibus cheio. A bondade se revela quando não somos correspondidos. Esse amor não é sentimento passageiro — é escolha diária, é disciplina espiritual.</div>
+            </div>
+          </div>
+          <div class="dev-block">
+            <div class="dev-block-label">✦ Aprendizado</div>
+            <div class="dev-learning-block">
+              <div class="dev-learning-text">Escolha uma característica do amor hoje — paciência, bondade, não se irritar — e pratique-a intencionalmente com uma pessoa específica. O amor que não falha começa com uma escolha de cada vez.</div>
+            </div>
+          </div>
+          <div class="dev-card-actions">
+            <button class="dev-action-btn" id="devref-btn-4" onclick="openDevReflect('dcard-4','O amor que nunca falha','1 Coríntios 13:4-6',event)">✍ Refletir</button>
+            <button class="dev-action-btn wa" onclick="shareDevWA('O amor que nunca falha','1 Coríntios 13:4-6','&quot;O amor é paciente, o amor é bondoso. Não inveja, não se vangloria...&quot;','Paulo escreveu para uma igreja cheia de conflitos. Esse hino não descreve como somos — é o retrato de como Deus nos chama a ser.','Escolha uma característica do amor hoje e pratique intencionalmente com alguém. O amor começa com uma escolha de cada vez.')">📲 WhatsApp</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /#dev-list -->
+
+    <!-- Devocionais criados pelo usuário -->
+    <div id="user-dev-list"></div>
+
+  </div>
+
+  <!-- ORAÇÃO -->
+  <div id="oracao" class="page">
+    <p class="section-title">▸ Orações para cada momento</p>
+    <div class="prayer-box"><h3>🌅 Oração da manhã</h3><p>"Senhor, obrigado por mais um dia de vida. Guia os meus passos, ilumina a minha mente e que a Tua vontade seja feita em tudo o que eu fizer hoje. Em nome de Jesus, amém."</p></div>
+    <div class="prayer-box"><h3>🌙 Oração da noite</h3><p>"Pai celestial, obrigado por Tua proteção durante este dia. Enquanto descanso, que Teu anjo guarde meu lar e minha família. Que eu acorde renovado amanhã. Amém."</p></div>
+    <div class="prayer-box"><h3>🌎 Oração pela missão</h3><p>"Senhor, usa-me como instrumento de libertação. Que eu seja portador das boas novas, que eu alcance os cativos, os quebrantados e os perdidos. Envia-me, Senhor! Amém."</p></div>
+    <div class="prayer-box"><h3>👨‍👩‍👧 Oração pela família</h3><p>"Deus, cobre minha família com o Teu sangue precioso. Guarda nossos filhos, une nossos corações e que a Tua paz habite em nosso lar. Amém."</p></div>
+    <div style="margin-top:1.25rem;">
+      <div class="wa-banner">
+        <div class="wa-icon">🙏</div>
+        <div class="wa-text"><h3>Envie seu pedido de oração</h3><p>Nossa equipe intercede por você.</p></div>
+        <a class="wa-btn" href="https://wa.me/5513996718228?text=Gostaria%20de%20um%20pedido%20de%20ora%C3%A7%C3%A3o%20%F0%9F%99%8F" target="_blank">Pedir oração</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTATO -->
+  <div id="contato" class="page">
+    <p class="section-title">▸ Fale conosco</p>
+    <div class="wa-banner">
+      <div class="wa-icon">💬</div>
+      <div class="wa-text"><h3>WhatsApp — (13) 99671-8228</h3><p>Segunda a sábado, 8h às 20h • Mongaguá, SP</p></div>
+      <a class="wa-btn" href="https://wa.me/5513996718228?text=Ol%C3%A1%2C%20vim%20pelo%20site%20Opera%C3%A7%C3%A3o%204%3A18!" target="_blank">Conversar agora</a>
+    </div>
+    <div style="display:grid;gap:8px;">
+      <div class="devotional-card"><div class="dev-title">📖 Compartilhe um testemunho</div><div class="dev-preview">Deus fez algo especial na sua vida? Queremos ouvir! Envie seu testemunho pelo WhatsApp.</div><a class="read-more" href="https://wa.me/5513996718228?text=Quero%20compartilhar%20um%20testemunho!%20%F0%9F%99%8C" target="_blank">Enviar testemunho ▸</a></div>
+      <div class="devotional-card"><div class="dev-title">🙏 Pedido de oração</div><div class="dev-preview">Está passando por um momento difícil? Entre em contato. Nossa equipe irá interceder por você.</div><a class="read-more" href="https://wa.me/5513996718228?text=Gostaria%20de%20um%20pedido%20de%20ora%C3%A7%C3%A3o%20%F0%9F%99%8F" target="_blank">Enviar pedido ▸</a></div>
+      <div class="devotional-card"><div class="dev-title">🌎 Quero fazer parte da missão</div><div class="dev-preview">Sente o chamado? Venha para a Operação 4:18 em Mongaguá e região!</div><a class="read-more" href="https://wa.me/5513996718228?text=Quero%20fazer%20parte%20da%20Opera%C3%A7%C3%A3o%204%3A18!%20%F0%9F%8C%8E" target="_blank">Quero participar ▸</a></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── MODAL REFLETIR ── -->
+<div id="reflect-modal-bg" class="reflect-modal-bg" onclick="closeReflectModal(event)">
+  <div class="reflect-modal" id="reflect-modal">
+    <div class="reflect-modal-label">✍ Minha Reflexão</div>
+    <div class="reflect-modal-verse" id="reflect-verse-text"></div>
+    <div class="reflect-modal-ref" id="reflect-verse-ref"></div>
+    <div class="reflect-modal-prompt">O que esse versículo significa para você hoje?</div>
+    <textarea class="reflect-textarea" id="reflect-textarea" placeholder="Escreva aqui sua reflexão, oração ou pensamento..."></textarea>
+    <div class="reflect-modal-actions">
+      <button class="reflect-btn-delete" id="reflect-btn-delete" onclick="deleteReflection()" style="display:none">🗑 Apagar</button>
+      <button class="reflect-btn-cancel" onclick="closeReflectModal()">Cancelar</button>
+      <button class="reflect-btn-save" onclick="saveReflection()">Salvar ✦</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── MODAL CRIAR DEVOCIONAL ── -->
+<div id="create-dev-modal-bg" class="create-dev-modal-bg" onclick="closeCreateDev(event)">
+  <div class="create-dev-modal" id="create-dev-modal">
+    <div class="create-dev-modal-header">
+      <div class="create-dev-modal-title">✦ Criar devocional</div>
+      <button class="create-dev-close" onclick="closeCreateDev()">✕</button>
+    </div>
+    <div class="create-dev-field">
+      <label class="create-dev-label">Título</label>
+      <input class="create-dev-input" id="cdev-title" type="text" placeholder="Ex: A graça que me sustentou hoje...">
+    </div>
+    <div class="create-dev-field">
+      <label class="create-dev-label">📖 Versículo base</label>
+      <input class="create-dev-input" id="cdev-verse-ref" type="text" placeholder="Referência — Ex: João 3:16" style="margin-bottom:8px;">
+      <textarea class="create-dev-textarea" id="cdev-verse-text" placeholder="Texto do versículo..." style="min-height:64px;"></textarea>
+    </div>
+    <div class="create-dev-field">
+      <label class="create-dev-label">💭 Reflexão</label>
+      <textarea class="create-dev-textarea" id="cdev-reflection" placeholder="O que Deus falou ao seu coração por meio desse versículo?"></textarea>
+    </div>
+    <div class="create-dev-field">
+      <label class="create-dev-label">✦ Aprendizado</label>
+      <textarea class="create-dev-textarea" id="cdev-learning" placeholder="Qual aplicação prática você leva para o seu dia?"></textarea>
+    </div>
+    <div class="create-dev-actions">
+      <button class="create-dev-cancel" onclick="closeCreateDev()">Cancelar</button>
+      <button class="create-dev-save" onclick="saveUserDev()">Salvar devocional ✦</button>
+    </div>
+  </div>
+</div>
+
+<div id="theme-modal-bg" class="theme-modal-bg" onclick="closeThemeModal()">
+  <div class="theme-modal">
+    <div class="theme-modal-header">
+      <div><span id="theme-modal-icon" style="font-size:22px;margin-right:10px;"></span><span class="theme-modal-title" id="theme-modal-title"></span></div>
+      <button class="theme-modal-close" onclick="closeThemeModal()">✕</button>
+    </div>
+    <div id="theme-modal-verses"></div>
+  </div>
+</div>
+
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">↑</button>
+
+<div class="footer">
+  <div class="footer-logo"># OPERAÇÃO 4:18</div>
+  <p>Mongaguá, SP • (13) 99671-8228</p>
+  <p style="margin-top:8px;">"O Espírito do Senhor está sobre mim, porque me ungiu para anunciar boas novas." — Lucas 4:18</p>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   THEME TOGGLE — escolha do usuário
+   ══════════════════════════════════════════ */
+function applyThemeUI(theme) {
+  const icon  = document.getElementById('toggle-icon');
+  const label = document.getElementById('toggle-label');
+  if(icon)  icon.textContent  = theme === 'dark' ? '☀️' : '🌙';
+  if(label) label.textContent = theme === 'dark' ? 'Claro' : 'Escuro';
+}
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('op418_theme', next);
+  applyThemeUI(next);
+}
+
+// Sincroniza UI do botão com tema atual (já aplicado no <head>)
+applyThemeUI(document.documentElement.getAttribute('data-theme'));
+
+/* ══════════════════════════════════════════
+   BÍBLIA
+   ══════════════════════════════════════════ */
+const BOOKS = [
+  {idx:0,name:"Gênesis",chaps:50},{idx:1,name:"Êxodo",chaps:40},{idx:2,name:"Levítico",chaps:27},
+  {idx:3,name:"Números",chaps:36},{idx:4,name:"Deuteronômio",chaps:34},{idx:5,name:"Josué",chaps:24},
+  {idx:6,name:"Juízes",chaps:21},{idx:7,name:"Rute",chaps:4},{idx:8,name:"1 Samuel",chaps:31},
+  {idx:9,name:"2 Samuel",chaps:24},{idx:10,name:"1 Reis",chaps:22},{idx:11,name:"2 Reis",chaps:25},
+  {idx:12,name:"1 Crônicas",chaps:29},{idx:13,name:"2 Crônicas",chaps:36},{idx:14,name:"Esdras",chaps:10},
+  {idx:15,name:"Neemias",chaps:13},{idx:16,name:"Ester",chaps:10},{idx:17,name:"Jó",chaps:42},
+  {idx:18,name:"Salmos",chaps:150},{idx:19,name:"Provérbios",chaps:31},{idx:20,name:"Eclesiastes",chaps:12},
+  {idx:21,name:"Cantares",chaps:8},{idx:22,name:"Isaías",chaps:66},{idx:23,name:"Jeremias",chaps:52},
+  {idx:24,name:"Lamentações",chaps:5},{idx:25,name:"Ezequiel",chaps:48},{idx:26,name:"Daniel",chaps:12},
+  {idx:27,name:"Oséias",chaps:14},{idx:28,name:"Joel",chaps:3},{idx:29,name:"Amós",chaps:9},
+  {idx:30,name:"Obadias",chaps:1},{idx:31,name:"Jonas",chaps:4},{idx:32,name:"Miquéias",chaps:7},
+  {idx:33,name:"Naum",chaps:3},{idx:34,name:"Habacuque",chaps:3},{idx:35,name:"Sofonias",chaps:3},
+  {idx:36,name:"Ageu",chaps:2},{idx:37,name:"Zacarias",chaps:14},{idx:38,name:"Malaquias",chaps:4},
+  {idx:39,name:"Mateus",chaps:28},{idx:40,name:"Marcos",chaps:16},{idx:41,name:"Lucas",chaps:24},
+  {idx:42,name:"João",chaps:21},{idx:43,name:"Atos",chaps:28},{idx:44,name:"Romanos",chaps:16},
+  {idx:45,name:"1 Coríntios",chaps:16},{idx:46,name:"2 Coríntios",chaps:13},{idx:47,name:"Gálatas",chaps:6},
+  {idx:48,name:"Efésios",chaps:6},{idx:49,name:"Filipenses",chaps:4},{idx:50,name:"Colossenses",chaps:4},
+  {idx:51,name:"1 Tessalonicenses",chaps:5},{idx:52,name:"2 Tessalonicenses",chaps:3},{idx:53,name:"1 Timóteo",chaps:6},
+  {idx:54,name:"2 Timóteo",chaps:4},{idx:55,name:"Tito",chaps:3},{idx:56,name:"Filemom",chaps:1},
+  {idx:57,name:"Hebreus",chaps:13},{idx:58,name:"Tiago",chaps:5},{idx:59,name:"1 Pedro",chaps:5},
+  {idx:60,name:"2 Pedro",chaps:3},{idx:61,name:"1 João",chaps:5},{idx:62,name:"2 João",chaps:1},
+  {idx:63,name:"3 João",chaps:1},{idx:64,name:"Judas",chaps:1},{idx:65,name:"Apocalipse",chaps:22}
+];
+
+let bibleData=null,bibleLoading=false,bibleError=false,bibleCallbacks=[];
+let currentBook=null,currentChap=1;
+
+function populateBooks(){
+  const sel=document.getElementById('book-select');
+  BOOKS.forEach((b,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=b.name; sel.appendChild(o); });
+  onBookChange();
+}
+
+function onBookChange(){
+  const i=parseInt(document.getElementById('book-select').value);
+  currentBook=BOOKS[i]; currentChap=1;
+  const cs=document.getElementById('chap-select'); cs.innerHTML='';
+  for(let c=1;c<=currentBook.chaps;c++){ const o=document.createElement('option'); o.value=c; o.textContent='Cap. '+c; cs.appendChild(o); }
+  renderChapGrid();
+  document.getElementById('bible-content').innerHTML='<div class="bible-placeholder">📖<br><br>Selecione um capítulo e clique em LER.</div>';
+  document.getElementById('chap-nav').style.display='none';
+}
+
+function renderChapGrid(){
+  if(!currentBook) return;
+  const grid=document.getElementById('chap-grid'); grid.innerHTML='';
+  for(let i=1;i<=currentBook.chaps;i++){
+    const d=document.createElement('div');
+    d.className='chap-num'+(i===currentChap?' active':''); d.textContent=i;
+    const c=i; d.onclick=()=>{ currentChap=c; document.getElementById('chap-select').value=c; loadChapter(); };
+    grid.appendChild(d);
+  }
+  document.getElementById('chap-grid-wrap').style.display='block';
+}
+
+function ensureBibleLoaded(cb){
+  if(bibleData){cb(null,bibleData);return;}
+  if(bibleError){cb(new Error('Falha'));return;}
+  bibleCallbacks.push(cb);
+  if(bibleLoading) return;
+  bibleLoading=true;
+  fetch('https://raw.githubusercontent.com/thiagobodruk/bible/master/json/pt_acf.json')
+    .then(r=>{if(!r.ok)throw new Error(r.status);return r.json();})
+    .then(d=>{if(!Array.isArray(d)||d.length<66)throw new Error('inv');bibleData=d;bibleLoading=false;bibleCallbacks.splice(0).forEach(f=>f(null,d));})
+    .catch(()=>fetch('https://raw.githubusercontent.com/thiagobodruk/bible/master/json/pt_aa.json')
+      .then(r=>{if(!r.ok)throw new Error(r.status);return r.json();})
+      .then(d=>{if(!Array.isArray(d)||d.length<66)throw new Error('inv');bibleData=d;bibleLoading=false;bibleCallbacks.splice(0).forEach(f=>f(null,d));})
+      .catch(e=>{bibleError=true;bibleLoading=false;bibleCallbacks.splice(0).forEach(f=>f(e));}));
+}
+
+function loadChapter(){
+  if(!currentBook) return;
+  currentChap=parseInt(document.getElementById('chap-select').value);
+  renderChapGrid();
+  const ct=document.getElementById('bible-content');
+  ct.innerHTML='<div class="bible-loading">⏳ Carregando '+currentBook.name+' '+currentChap+'...</div>';
+  document.getElementById('chap-nav').style.display='none';
+  ensureBibleLoaded((err,data)=>{
+    if(err||!data){ct.innerHTML='<div class="bible-error">❌ Não foi possível carregar a Bíblia.<br><br>Verifique sua conexão e tente novamente.</div>';return;}
+    try{
+      const be=data[currentBook.idx], chs=be.chapters||be;
+      if(!chs||!Array.isArray(chs)) throw new Error('Estrutura inesperada');
+      const cv=chs[currentChap-1];
+      if(!cv||!Array.isArray(cv)||cv.length===0) throw new Error('Capítulo vazio');
+      let html='<div class="verses-area">';
+      cv.forEach((text,i)=>{
+        const n=i+1,bkey=currentBook.name+':'+currentChap+':'+n,isBm=!!bookmarks[bkey];
+        html+=`<div class="verse-row${isBm?' bookmarked':''}" data-bkey="${bkey}" data-vtext="${String(text).trim().replace(/"/g,'&quot;')}" data-vref="${currentBook.name} ${currentChap}:${n}"><span class="verse-num">${n}</span><div class="verse-body-wrap"><span class="verse-body">${String(text).trim()}</span><button class="btn-reflect${reflections[bkey]?' has-note':''}" onclick="openReflect('${bkey}','${String(text).trim().replace(/'/g,"\\'")}','${currentBook.name} ${currentChap}:${n}',event)">${reflections[bkey]?'✍ Reflexão':'✍ Refletir'}</button></div><span class="bookmark-star">⭐</span></div>`;
+      });
+      html+='</div>';
+      ct.innerHTML=html;
+      document.getElementById('chap-info').textContent=currentBook.name+' • Cap. '+currentChap;
+      document.getElementById('chap-nav').style.display='flex';
+      const bi=BOOKS.indexOf(currentBook);
+      document.getElementById('btn-prev-chap').disabled=(currentChap<=1&&bi===0);
+      document.getElementById('btn-next-chap').disabled=(currentChap>=currentBook.chaps&&bi===BOOKS.length-1);
+      ct.querySelectorAll('.verse-row').forEach(r=>attachVerseInteractions(r,r.dataset.bkey,r.dataset.vtext,r.dataset.vref));
+      smoothScrollTo(ct.getBoundingClientRect().top+window.scrollY-80,500);
+    }catch(e){ct.innerHTML='<div class="bible-error">⚠️ Erro ao exibir este capítulo.<br><small>'+e.message+'</small></div>';}
+  });
+}
+
+function toggleHighlight(el){
+  const was=el.classList.contains('verse-highlight');
+  document.querySelectorAll('.verse-row').forEach(r=>r.classList.remove('verse-highlight'));
+  if(!was) el.classList.add('verse-highlight');
+}
+
+/* ── BOOKMARKS ── */
+let bookmarks={};
+function loadBookmarks(){ try{bookmarks=JSON.parse(localStorage.getItem('op418_bookmarks')||'{}')}catch(e){bookmarks={};} updateBookmarksUI(); }
+function saveBookmarks(){ try{localStorage.setItem('op418_bookmarks',JSON.stringify(bookmarks));}catch(e){} updateBookmarksUI(); }
+function toggleBookmark(k,t,r){ if(bookmarks[k]) delete bookmarks[k]; else bookmarks[k]={text:t,ref:r}; saveBookmarks(); document.querySelectorAll(`.verse-row[data-bkey="${k}"]`).forEach(el=>el.classList.toggle('bookmarked',!!bookmarks[k])); }
+function updateBookmarksUI(){
+  const keys=Object.keys(bookmarks);
+  const ce=document.getElementById('bookmarks-count'); if(ce) ce.textContent=keys.length;
+  const list=document.getElementById('bookmarks-list'); if(!list) return;
+  if(!keys.length){list.innerHTML='<p class="bookmarks-empty">Nenhum versículo salvo ainda.<br>Segure 1s (mobile) ou clique duas vezes (desktop) para salvar ⭐</p>';return;}
+  list.innerHTML=keys.map(k=>{const bm=bookmarks[k],txt=bm.text.length>100?bm.text.slice(0,100)+'…':bm.text;return`<div class="bookmark-item"><div style="flex:1"><span style="font-style:italic">"${txt}"</span><span class="bookmark-item-ref">${bm.ref}</span></div><button class="bookmark-remove" onclick="removeBookmark('${k}')">✕</button></div>`;}).join('');
+}
+function removeBookmark(k){ delete bookmarks[k]; saveBookmarks(); document.querySelectorAll(`.verse-row[data-bkey="${k}"]`).forEach(r=>r.classList.remove('bookmarked')); }
+function clearAllBookmarks(){ if(!confirm('Remover todos os versículos salvos?')) return; bookmarks={}; saveBookmarks(); document.querySelectorAll('.verse-row.bookmarked').forEach(r=>r.classList.remove('bookmarked')); }
+function toggleBookmarksPanel(){ document.getElementById('bookmarks-panel').classList.toggle('open'); document.getElementById('bookmarks-bar').classList.toggle('open'); }
+
+function attachVerseInteractions(row,bkey,text,ref){
+  let pt=null;
+  row.addEventListener('touchstart',()=>{pt=setTimeout(()=>{pt=null;toggleBookmark(bkey,text,ref);if(navigator.vibrate)navigator.vibrate(30);},600);},{passive:true});
+  row.addEventListener('touchend',()=>{if(pt){clearTimeout(pt);pt=null;}},{passive:true});
+  row.addEventListener('touchmove',()=>{if(pt){clearTimeout(pt);pt=null;}},{passive:true});
+  row.addEventListener('dblclick',e=>{e.preventDefault();toggleBookmark(bkey,text,ref);});
+  row.addEventListener('click',e=>{if(e.detail===1) setTimeout(()=>{if(e.detail===1)toggleHighlight(row);},220);});
+}
+
+function prevChap(){
+  const i=BOOKS.indexOf(currentBook);
+  if(currentChap>1){currentChap--;document.getElementById('chap-select').value=currentChap;loadChapter();}
+  else if(i>0){document.getElementById('book-select').value=i-1;onBookChange();currentChap=BOOKS[i-1].chaps;document.getElementById('chap-select').value=currentChap;loadChapter();}
+}
+function nextChap(){
+  const i=BOOKS.indexOf(currentBook);
+  if(currentChap<currentBook.chaps){currentChap++;document.getElementById('chap-select').value=currentChap;loadChapter();}
+  else if(i<BOOKS.length-1){document.getElementById('book-select').value=i+1;onBookChange();loadChapter();}
+}
+
+function smoothScrollTo(ty,dur){
+  const sy=window.scrollY,diff=ty-sy;let s=null;
+  function ease(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+  function step(ts){if(!s)s=ts;const p=Math.min((ts-s)/dur,1);window.scrollTo(0,sy+diff*ease(p));if(p<1)requestAnimationFrame(step);}
+  requestAnimationFrame(step);
+}
+
+/* ── VERSÍCULO DO DIA ── */
+const dailyVerses=[
+  {text:"O Espírito do Senhor está sobre mim, porque me ungiu para anunciar boas novas aos pobres.",ref:"Lucas 4:18"},
+  {text:"Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna.",ref:"João 3:16"},
+  {text:"Tudo posso naquele que me fortalece.",ref:"Filipenses 4:13"},
+  {text:"Porque sou eu que conheço os planos que tenho para você, diz o Senhor, planos de fazê-lo prosperar e não de causar dano.",ref:"Jeremias 29:11"},
+  {text:"Confie no Senhor de todo o seu coração e não se apoie no seu próprio entendimento.",ref:"Provérbios 3:5"},
+  {text:"Mas os que esperam no Senhor renovarão as suas forças. Voarão alto como águias.",ref:"Isaías 40:31"},
+  {text:"A tua palavra é lâmpada para os meus pés e luz para o meu caminho.",ref:"Salmos 119:105"},
+  {text:"Vinde a mim, todos os que estais cansados e sobrecarregados, e eu vos darei descanso.",ref:"Mateus 11:28"},
+  {text:"O Senhor é o meu pastor e nada me faltará.",ref:"Salmos 23:1"},
+  {text:"Sede fortes e corajosos. Não temais, pois o Senhor, vosso Deus, vai com vocês.",ref:"Deuteronômio 31:6"},
+  {text:"Cura os quebrantados de coração e lhes cura as feridas.",ref:"Salmos 147:3"},
+  {text:"O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.",ref:"1 Coríntios 13:4"}
+];
+let curV=new Date().getDate()%dailyVerses.length;
+function setVerse(i){document.getElementById('verse-text').textContent='"'+dailyVerses[i].text+'"';document.getElementById('verse-ref').textContent='— '+dailyVerses[i].ref;curV=i;}
+function newVerse(){setVerse((curV+1)%dailyVerses.length);}
+function copyVerse(){const v=dailyVerses[curV];navigator.clipboard&&navigator.clipboard.writeText('"'+v.text+'" — '+v.ref);alert('Versículo copiado! ✦');}
+function shareWA(){const v=dailyVerses[curV];window.open('https://wa.me/?text='+encodeURIComponent('"'+v.text+'" — '+v.ref+'\n\n🌎 Operação 4:18 — Mongaguá, SP'),'_blank');}
+function reflectDailyVerse(){const v=dailyVerses[curV];const key='daily:'+v.ref.replace(/\s/g,'_');openReflect(key,v.text,v.ref,null);}
+
+/* ── NAV ── */
+function showPage(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  requestAnimationFrame(()=>{ document.getElementById(id).classList.add('active'); if(btn)btn.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); });
+}
+window.addEventListener('scroll',()=>{ const b=document.getElementById('back-to-top'); if(b)b.classList.toggle('visible',window.scrollY>320); },{passive:true});
+
+/* ── TEMAS BÍBLICOS (modal) ── */
+const THEME_VERSES={
+  'fé':{icon:'🙏',label:'Fé',verses:[{text:'A fé é o firme fundamento das coisas que se esperam e a prova das coisas que não se veem.',ref:'Hebreus 11:1'},{text:'Confie no Senhor de todo o seu coração e não se apoie no seu próprio entendimento.',ref:'Provérbios 3:5'},{text:'E Jesus lhe disse: Se tu podes crer! Tudo é possível ao que crê.',ref:'Marcos 9:23'},{text:'Porque pela graça sois salvos, por meio da fé; e isso não vem de vós; é dom de Deus.',ref:'Efésios 2:8'},{text:'Mas sem fé é impossível agradar a Deus.',ref:'Hebreus 11:6'}]},
+  'amor':{icon:'❤️',label:'Amor',verses:[{text:'Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna.',ref:'João 3:16'},{text:'O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.',ref:'1 Coríntios 13:4'},{text:'Amados, amemo-nos uns aos outros, porque o amor é de Deus.',ref:'1 João 4:7'},{text:'Nisto conhecemos o amor: que Jesus Cristo deu a sua vida por nós.',ref:'1 João 3:16'},{text:'Amarás o Senhor teu Deus de todo o teu coração, e de toda a tua alma, e de todo o teu entendimento.',ref:'Mateus 22:37'}]},
+  'esperança':{icon:'🌅',label:'Esperança',verses:[{text:'Porque sou eu que conheço os planos que tenho para você, diz o Senhor, planos de fazê-lo prosperar e não de causar dano, planos de dar a você esperança e um futuro.',ref:'Jeremias 29:11'},{text:'Mas os que esperam no Senhor renovarão as suas forças. Voarão alto como águias.',ref:'Isaías 40:31'},{text:'Por que estás abatida, ó minha alma? Por que te perturbas dentro de mim? Espera em Deus, pois ainda o louvarei.',ref:'Salmos 42:11'},{text:'Bendito o homem que confia no Senhor e cuja esperança é o Senhor.',ref:'Jeremias 17:7'},{text:'Que o Deus da esperança vos encha de todo o gozo e paz no crer, para que abundeis em esperança.',ref:'Romanos 15:13'}]},
+  'paz':{icon:'🕊️',label:'Paz',verses:[{text:'A paz de Deus, que excede todo o entendimento, guardará os vossos corações e os vossos sentimentos em Cristo Jesus.',ref:'Filipenses 4:7'},{text:'Deixo-vos a paz, a minha paz vos dou; não vo-la dou como o mundo a dá.',ref:'João 14:27'},{text:'Não andeis ansiosos de coisa alguma; antes, em tudo sejam os vossos pedidos conhecidos diante de Deus.',ref:'Filipenses 4:6'},{text:'O Senhor dará força ao seu povo; o Senhor abençoará o seu povo com paz.',ref:'Salmos 29:11'},{text:'Sede fortes e corajosos. Não temais, pois o Senhor, vosso Deus, vai convosco.',ref:'Deuteronômio 31:6'}]},
+  'força':{icon:'💪',label:'Força',verses:[{text:'Tudo posso naquele que me fortalece.',ref:'Filipenses 4:13'},{text:'Ele dá força ao cansado e multiplica o vigor ao que não tem nenhum.',ref:'Isaías 40:29'},{text:'O Senhor é a minha força e o meu escudo; nele o meu coração confia.',ref:'Salmos 28:7'},{text:'Não te mandei eu? Sê forte e corajoso; não te atemorizes, nem te espantes.',ref:'Josué 1:9'},{text:'Posso tudo em Cristo que me fortalece; na fraqueza, o seu poder se aperfeiçoa.',ref:'2 Coríntios 12:9'}]},
+  'sabedoria':{icon:'📖',label:'Sabedoria',verses:[{text:'O temor do Senhor é o princípio da sabedoria, e o conhecimento do Santo é o entendimento.',ref:'Provérbios 9:10'},{text:'A tua palavra é lâmpada para os meus pés e luz para o meu caminho.',ref:'Salmos 119:105'},{text:'Se algum de vós tem falta de sabedoria, peça-a a Deus, que a todos dá liberalmente.',ref:'Tiago 1:5'},{text:'Filho meu, presta atenção à minha sabedoria e inclina o teu ouvido à minha inteligência.',ref:'Provérbios 5:1'},{text:'Cristo Jesus se fez para nós sabedoria da parte de Deus, e justiça, e santificação, e redenção.',ref:'1 Coríntios 1:30'}]},
+  'cura':{icon:'✨',label:'Cura',verses:[{text:'Cura os quebrantados de coração e lhes cura as feridas.',ref:'Salmos 147:3'},{text:'Ele foi ferido pelas nossas transgressões e moído pelas nossas iniquidades; o castigo que nos traz a paz estava sobre ele, e pelas suas chagas fomos curados.',ref:'Isaías 53:5'},{text:'Eu sou o Senhor que te sara.',ref:'Êxodo 15:26'},{text:'Bendize, ó minha alma, ao Senhor... que sara todas as tuas enfermidades.',ref:'Salmos 103:2-3'},{text:'A oração da fé salvará o enfermo e o Senhor o levantará.',ref:'Tiago 5:15'}]},
+  'missão':{icon:'🌎',label:'Missão',verses:[{text:'O Espírito do Senhor está sobre mim, porque me ungiu para anunciar boas novas aos pobres; enviou-me para proclamar libertação aos cativos.',ref:'Lucas 4:18'},{text:'Portanto, ide, fazei discípulos de todas as nações, batizando-os em nome do Pai, e do Filho, e do Espírito Santo.',ref:'Mateus 28:19'},{text:'Mas recebereis poder quando o Espírito Santo vier sobre vós, e sereis minhas testemunhas.',ref:'Atos 1:8'},{text:'Como são formosos os pés dos que anunciam o evangelho das coisas boas!',ref:'Romanos 10:15'},{text:'Aqui estou, envia-me a mim!',ref:'Isaías 6:8'}]}
+};
+function goTheme(t){
+  const th=THEME_VERSES[t];if(!th)return;
+  document.getElementById('theme-modal-icon').textContent=th.icon;
+  document.getElementById('theme-modal-title').textContent=th.label;
+  document.getElementById('theme-modal-verses').innerHTML=th.verses.map(v=>{const key='theme:'+v.ref.replace(/\s/g,'_');return`<div class="theme-verse-item"><div class="theme-verse-text">"${v.text}"</div><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;"><div class="theme-verse-ref">— ${v.ref}</div><button class="btn-reflect${reflections[key]?' has-note':''}" style="opacity:1;pointer-events:auto;" onclick="openReflect('${key}','${v.text.replace(/'/g,"\\'")}','${v.ref}',event)">${reflections[key]?'✍ Reflexão':'✍ Refletir'}</button></div></div>`;}).join('');
+  document.getElementById('theme-modal-bg').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeThemeModal(e){
+  if(e&&e.target!==document.getElementById('theme-modal-bg'))return;
+  document.getElementById('theme-modal-bg').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* ── REFLEXÕES ── */
+let reflections={};
+function loadReflections(){ try{reflections=JSON.parse(localStorage.getItem('op418_reflections')||'{}')}catch(e){reflections={};} }
+function saveReflections(){ try{localStorage.setItem('op418_reflections',JSON.stringify(reflections));}catch(e){} }
+
+let currentReflectKey=null;
+function openReflect(key,text,ref,e){
+  if(e){e.stopPropagation();}
+  currentReflectKey=key;
+  document.getElementById('reflect-verse-text').textContent='"'+text+'"';
+  document.getElementById('reflect-verse-ref').textContent='— '+ref;
+  const existing=reflections[key]||'';
+  document.getElementById('reflect-textarea').value=existing;
+  document.getElementById('reflect-btn-delete').style.display=existing?'block':'none';
+  document.getElementById('reflect-modal-bg').classList.add('open');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>document.getElementById('reflect-textarea').focus(),120);
+}
+function closeReflectModal(e){
+  if(e&&e.target!==document.getElementById('reflect-modal-bg'))return;
+  document.getElementById('reflect-modal-bg').classList.remove('open');
+  document.body.style.overflow='';
+  currentReflectKey=null;
+}
+function saveReflection(){
+  if(!currentReflectKey)return;
+  const val=document.getElementById('reflect-textarea').value.trim();
+  if(val){ reflections[currentReflectKey]=val; } else { delete reflections[currentReflectKey]; }
+  saveReflections();
+  // Atualiza botão na linha do versículo
+  document.querySelectorAll(`.verse-row[data-bkey="${currentReflectKey}"] .btn-reflect`).forEach(btn=>{
+    if(val){ btn.textContent='✍ Reflexão'; btn.classList.add('has-note'); }
+    else { btn.textContent='✍ Refletir'; btn.classList.remove('has-note'); }
+  });
+  // Feedback visual
+  const bg=document.getElementById('reflect-modal-bg');
+  bg.classList.remove('open');
+  document.body.style.overflow='';
+  currentReflectKey=null;
+}
+function deleteReflection(){
+  if(!currentReflectKey)return;
+  if(!confirm('Apagar esta reflexão?'))return;
+  delete reflections[currentReflectKey];
+  saveReflections();
+  document.querySelectorAll(`.verse-row[data-bkey="${currentReflectKey}"] .btn-reflect`).forEach(btn=>{
+    btn.textContent='✍ Refletir'; btn.classList.remove('has-note');
+  });
+  document.getElementById('reflect-modal-bg').classList.remove('open');
+  document.body.style.overflow='';
+  currentReflectKey=null;
+}
+
+/* ══════════════════════════════════════════
+   DEVOCIONAL — NOVO SISTEMA
+   ══════════════════════════════════════════ */
+
+/* Expandir/colapsar card */
+function toggleDevCard(id) {
+  const card = document.getElementById(id);
+  if (!card) return;
+  const isOpen = card.classList.contains('open');
+  // fecha todos
+  document.querySelectorAll('.dev-card-new.open').forEach(c => c.classList.remove('open'));
+  if (!isOpen) card.classList.add('open');
+}
+
+/* Compartilhar no WhatsApp */
+function shareDevWA(titulo, ref, versiculo, reflexao, aprendizado) {
+  const msg =
+    `✦ *${titulo}*\n` +
+    `🌎 Operação 4:18 — Mongaguá, SP\n\n` +
+    `📖 *Versículo:* ${ref}\n` +
+    `${versiculo}\n\n` +
+    `💭 *Reflexão:*\n${reflexao}\n\n` +
+    `✦ *Aprendizado:*\n${aprendizado}\n\n` +
+    `_"O Espírito do Senhor está sobre mim, porque me ungiu para anunciar boas novas." — Lucas 4:18_`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+}
+
+/* Modal Refletir — devocional */
+function openDevReflect(cardId, titulo, ref, e) {
+  if (e) e.stopPropagation();
+  const key = 'dev:' + cardId;
+  openReflect(key, titulo, ref, null);
+}
+
+/* ── CRIAR DEVOCIONAL ── */
+function openCreateDev() {
+  document.getElementById('cdev-title').value = '';
+  document.getElementById('cdev-verse-ref').value = '';
+  document.getElementById('cdev-verse-text').value = '';
+  document.getElementById('cdev-reflection').value = '';
+  document.getElementById('cdev-learning').value = '';
+  document.getElementById('create-dev-modal-bg').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('cdev-title').focus(), 120);
+}
+
+function closeCreateDev(e) {
+  if (e && e.target !== document.getElementById('create-dev-modal-bg')) return;
+  document.getElementById('create-dev-modal-bg').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+let userDevs = [];
+function loadUserDevs() {
+  try { userDevs = JSON.parse(localStorage.getItem('op418_userdevs') || '[]'); } catch(e) { userDevs = []; }
+  renderUserDevs();
+}
+function saveUserDevs() {
+  try { localStorage.setItem('op418_userdevs', JSON.stringify(userDevs)); } catch(e) {}
+}
+
+function saveUserDev() {
+  const titulo = document.getElementById('cdev-title').value.trim();
+  const versiculo = document.getElementById('cdev-verse-text').value.trim();
+  const ref = document.getElementById('cdev-verse-ref').value.trim();
+  const reflexao = document.getElementById('cdev-reflection').value.trim();
+  const aprendizado = document.getElementById('cdev-learning').value.trim();
+  if (!titulo) { document.getElementById('cdev-title').focus(); return; }
+  const id = 'udev-' + Date.now();
+  const now = new Date();
+  const dias = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  const dateStr = dias[now.getDay()] + ', ' + now.getDate() + ' ' + meses[now.getMonth()];
+  userDevs.unshift({ id, titulo, versiculo, ref, reflexao, aprendizado, date: dateStr });
+  saveUserDevs();
+  renderUserDevs();
+  closeCreateDev();
+}
+
+function deleteUserDev(id) {
+  if (!confirm('Apagar este devocional?')) return;
+  userDevs = userDevs.filter(d => d.id !== id);
+  saveUserDevs();
+  renderUserDevs();
+}
+
+function renderUserDevs() {
+  const el = document.getElementById('user-dev-list');
+  if (!el) return;
+  if (!userDevs.length) { el.innerHTML = ''; return; }
+  let html = '<p class="section-title" style="margin-top:1.25rem;">▸ Meus devocionais</p>';
+  userDevs.forEach(d => {
+    const esc = s => String(s || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    html += `
+    <div class="dev-card-new" id="${d.id}" style="border-left-color:var(--accent);">
+      <div class="dev-card-header" onclick="toggleDevCard('${d.id}')">
+        <div class="dev-card-header-left">
+          <div class="dev-date" style="display:flex;align-items:center;gap:6px;">${d.date}<span class="dev-user-badge">Meu</span></div>
+          <div class="dev-title">${d.titulo}</div>
+          ${d.ref ? `<div class="dev-preview">${d.ref}</div>` : ''}
+        </div>
+        <div class="dev-card-chevron">▼</div>
+      </div>
+      <div class="dev-card-body">
+        ${d.versiculo ? `<div class="dev-block"><div class="dev-block-label">📖 Versículo base</div><div class="dev-verse-block"><div class="dev-verse-quote">"${d.versiculo}"</div>${d.ref ? `<div class="dev-verse-ref-line">— ${d.ref}</div>` : ''}</div></div>` : ''}
+        ${d.reflexao ? `<div class="dev-block"><div class="dev-block-label">💭 Reflexão</div><div class="dev-reflection-block"><div class="dev-reflection-text">${d.reflexao}</div></div></div>` : ''}
+        ${d.aprendizado ? `<div class="dev-block"><div class="dev-block-label">✦ Aprendizado</div><div class="dev-learning-block"><div class="dev-learning-text">${d.aprendizado}</div></div></div>` : ''}
+        <div class="dev-card-actions">
+          <button class="dev-action-btn" onclick="openDevReflect('${d.id}','${esc(d.titulo)}','${esc(d.ref)}',event)">✍ Refletir</button>
+          <button class="dev-action-btn wa" onclick="shareDevWA('${esc(d.titulo)}','${esc(d.ref)}','${esc(d.versiculo)}','${esc(d.reflexao)}','${esc(d.aprendizado)}')">📲 WhatsApp</button>
+          <button class="dev-action-btn" style="margin-left:auto;color:var(--text-faint);border-color:var(--border);" onclick="deleteUserDev('${d.id}')">🗑 Apagar</button>
+        </div>
+      </div>
+    </div>`;
+  });
+  el.innerHTML = html;
+}
+
+/* ── INIT ── */
+const _d=new Date(),_ms=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+document.getElementById('today-date').textContent=_d.getDate()+' de '+_ms[_d.getMonth()];
+setVerse(curV);
+populateBooks();
+loadBookmarks();
+loadReflections();
+loadUserDevs();
+</script>
+</body>
+</html>
